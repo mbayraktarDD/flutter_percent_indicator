@@ -347,7 +347,7 @@ _ArcAngles _getStartAngleFixedMargin(ArcType arcType) {
     fixedStartAngle = 399;
     startAngleFixedMargin = 312 / fixedStartAngle;
   } else if (arcType == ArcType.FULL) {
-    fixedStartAngle = 220;
+    fixedStartAngle = 100;
     startAngleFixedMargin = 172 / fixedStartAngle;
   } else {
     fixedStartAngle = 270;
@@ -537,23 +537,6 @@ class _CirclePainter extends CustomPainter {
         false,
         _paintLine,
       );
-
-      BoxShadow boxShadow = BoxShadow(
-        color: Colors.black.withOpacity(0.2),
-        blurRadius: 10,
-        spreadRadius: 5,
-        offset: const Offset(0, 0),
-      );
-
-      final shadowPath = Path();
-      shadowPath.addArc(
-        Rect.fromCircle(center: center, radius: radius),
-        radians(-90.0 + fixedStartAngle).toDouble(),
-        radians(360 * startAngleFixedMargin).toDouble(),
-      );
-
-      canvas.drawShadow(shadowPath, boxShadow.color, boxShadow.spreadRadius, false);
-
 
     }
   }
