@@ -104,6 +104,8 @@ class CircularPercentIndicator extends StatefulWidget {
   /// Set to true if you want to rotate linear gradient in accordance to the [startAngle].
   final bool rotateLinearGradient;
 
+  final BoxShadow boxShadow;
+
   CircularPercentIndicator({
     Key? key,
     this.percent = 0.0,
@@ -134,6 +136,12 @@ class CircularPercentIndicator extends StatefulWidget {
     this.widgetIndicator,
     this.rotateLinearGradient = false,
     this.progressBorderColor,
+    this.boxShadow = const BoxShadow(
+      color: Colors.blue,
+      spreadRadius: 5,
+      blurRadius: 10,
+      offset: Offset(1, 1),
+    ),
   }) : super(key: key) {
     if (linearGradient != null && progressColor != null) {
       throw ArgumentError(
@@ -252,6 +260,7 @@ class _CircularPercentIndicatorState extends State<CircularPercentIndicator>
           children: [
             CustomPaint(
               painter: _CirclePainter(
+                boxShadow: widget.boxShadow,
                 progress: _percent * 360,
                 progressColor: widget.progressColor,
                 progressBorderColor: widget.progressBorderColor,
@@ -386,6 +395,7 @@ class _CirclePainter extends CustomPainter {
   final bool reverse;
   final MaskFilter? maskFilter;
   final bool rotateLinearGradient;
+  final BoxShadow boxShadow;
 
   _CirclePainter({
     required this.lineWidth,
@@ -403,6 +413,7 @@ class _CirclePainter extends CustomPainter {
     this.arcType,
     this.maskFilter,
     required this.rotateLinearGradient,
+    required this.boxShadow,
   }) {
     _paintBackground.color = backgroundColor;
     _paintBackground.style = PaintingStyle.stroke;
@@ -538,12 +549,7 @@ class _CirclePainter extends CustomPainter {
         _paintLine,
       );
 
-      BoxShadow boxShadow = BoxShadow(
-        color: Colors.black.withOpacity(0.2),
-        blurRadius: 10,
-        spreadRadius: 5,
-        offset: const Offset(0, 0),
-      );
+ 
 
       final shadowPath = Path();
       shadowPath.addArc(
